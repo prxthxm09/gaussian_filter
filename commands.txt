@@ -1,0 +1,53 @@
+!apt-get --purge remove cuda nvidia* libnvidia-*
+!dpkg -l | grep cuda- | awk '{print $2}' | xargs -n1 dpkg --purge
+!apt-get remove cuda-*
+!apt autoremove
+!apt-get update
+
+!wget https://developer.nvidia.com/compute/cuda/11.0.3/local_installers/cuda-repo-ubuntu1804-11-0-local_11.0.3-450.51.06-1_amd64.deb
+!dpkg -i cuda-repo-ubuntu1804-11-0-local_11.0.3-450.51.06-1_amd64.deb
+!apt-key add /var/cuda-repo-ubuntu1804-11-0-local/7fa2af80.pub
+!apt-get update
+!apt-get install cuda-11-0
+
+!wget http://developer.download.nvidia.com/compute/redist/cudnn/v8.0.4/cudnn-11.0-linux-x64-v8.0.4.30.tgz
+!tar -xzvf cudnn-11.0-linux-x64-v8.0.4.30.tgz
+!cp cuda/include/cudnn*.h /usr/local/cuda/include
+!cp cuda/lib64/libcudnn* /usr/local/cuda/lib64
+!chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
+
+
+
+
+
+
+
+
+!apt-get update
+!apt-get install -y cuda-toolkit-11-0
+
+
+
+
+
+
+!wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-ubuntu1804.pin
+!sudo mv cuda-ubuntu1804.pin /etc/apt/preferences.d/cuda-repository-pin-600
+!wget https://developer.download.nvidia.com/compute/cuda/11.0.3/local_installers/cuda-repo-ubuntu1804-11-0-local_11.0.3-450.51.06-1_amd64.deb
+!sudo dpkg -i cuda-repo-ubuntu1804-11-0-local_11.0.3-450.51.06-1_amd64.deb
+!sudo apt-key add /var/cuda-repo-ubuntu1804-11-0-local/7fa2af80.pub
+!sudo apt-get update
+!sudo apt-get -y install cuda-11-0
+
+
+
+
+
+!apt-get update
+!apt-get install --no-install-recommends nvidia-cuda-toolkit
+
+
+
+
+!nvcc -o gaussian_filter gaussian_filter.cu -std=c++11 -lstdc++
+!./gaussian_filter input_image.jpeg output_image.jpg
